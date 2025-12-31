@@ -308,18 +308,6 @@ interactionMap.forEach((row, i) => {
                 }
             ))
         }
-        // //Tele
-        // else if (symbol===18){
-        //     interactions.push(
-        //         new Interactive({
-        //             position: {
-        //                 x: j * Interactive.width - (offset.x+40),
-        //                 y: i * Interactive.height - (offset.y+235)
-        //             },
-        //             type: 18
-        //         }
-        //     ))
-        // }
     })
 })
 
@@ -693,25 +681,21 @@ function hide(element){
         case 'qmark':
             elementToHide.style.display = "none";
             break;
-        }
+    }
 }
 
 function setTextContent(text) {
     var textContent = document.getElementById("text-window");
     textContent.innerText = text;
     textContent.style.display='none';
-  }
+}
 
 function showBin() {
     var binWindow = document.getElementById("bin");
     var binContainer = document.getElementById("binContainer");
     binWindow.style.display = "block";
     binContainer.style.display = "flex";
-
-    // binWindowTimeout = setTimeout(function() {
-    //     hideBin();
-    // }, 120000);
-  }
+}
 
 function hideBin() {
     var binWindow = document.getElementById("bin");
@@ -722,22 +706,6 @@ function hideBin() {
     playerInventory.inBin=false;
     allowPlayerMovement=true;
 }
-
-// function displayCommands(commands) {
-//     commandListContainer.innerHTML = ''; // Clear previous commands
-
-//     commandListContainer.style.display = 'block';
-
-//     var ul = document.createElement('ul');
-
-//     for (var i = 0; i < commands.length; i++) {
-//       var li = document.createElement('li');
-//       li.textContent = commands[i];
-//       ul.appendChild(li);
-//     }
-
-//     commandListContainer.appendChild(ul);
-// }
 
 function deleteInteractionByType(type) {
     for (var i = 0; i < interactions.length; i++) {
@@ -929,10 +897,7 @@ async function animate(){
         showTextWindow(25000);
         firstFrame=false;
     }
-    
-    // Pour imposer un fps précis: 
-    // setInterval(updateCountdown, 1000 / 60);    
-    // await sleep(16.67); //Temps entre chaque image en ms (60fps)
+
     let moving=true;
     player.moving=false;
 
@@ -1050,9 +1015,7 @@ async function animate(){
     }
     else if (keys.m.pressed && lastKey==='m'){
         player.moving=false;
-        //mKeyPressedCount++;
 
-        // if (mKeyPressedCount === 1) {
         for(let i=0;i<interactions.length;i++){
             const interaction = interactions[i]
             if(
@@ -1072,8 +1035,6 @@ async function animate(){
                         return;
                     }  
                     lastInteractionTime = currentTime;
-                    // console.log(plaques,lampeCuisine,lampeSalon,lampeTable,lavabo,evier);
-                    // console.log(calqueEvier.active,calqueLampeCuisine.active,calqueLampeSalon.active,calqueLampeTable.active,calquePlaques.active,calqueLavabo.active);
                     if(!calquePlaques.active&&!calqueLampeSalon.active&&!calqueLampeTable.active&&!calqueEvier.active&&!calqueLavabo.active&&!calqueLampeCuisine.active&&marmiteDone&&cartonDone&&papierDone&&assietteDone&&bouteilleDone){
                         setTextContent("\n\u00c7a y est je peux enfin sortir !");
                         showTextWindow();
@@ -1215,27 +1176,6 @@ async function animate(){
                         fridgeTimeout = setTimeout(function() {
                             calqueFrigo.changeStatus();
                         }, openedFridgeCooldown);
-                    
-                        //haveChoice=true;
-                        //if (!confirmations.deleteMarmite) {
-                        //    confirmations.deleteMarmite = true;
-                        //     setTextContent("\nJe vais mettre les restes dans le frigo pour demain !");
-                        //     showTextWindow();
-                        //     calqueFrigo.changeStatus();
-                        // } 
-                        // else if (confirmations.deleteMarmite) {
-                        //     confirmationKey='m';
-                        //    calqueFrigo.changeStatus();
-                            
-                        // }
-                        // if(confirmationKey==='m'){
-                        //     playerInventory.removeCollectible(marmiteCollectible.name);
-                        //     marmiteDone=true;
-                        //     marmiteInFridge=true;
-                        //     confirmations.deleteMarmite = false;
-                        //     confirmationKey='';
-                        //     haveChoice=false;
-                        // }
                     }
                 }
                 else if(interaction.type==2){
@@ -1388,9 +1328,6 @@ async function animate(){
                     deleteInteractionByType(14); 
                     audioCollect.play();    
                 }
-                // if(marmiteInFridge){
-                //     marmiteInFridge=false;
-                // }
             }        
         }
     }
@@ -1399,21 +1336,8 @@ async function animate(){
         hide('commandListContainer');
         hideBin();
         haveChoice=false;
-        //confirmationKey='';
         confirmations.deleteMarmite=false;
     }
-
-    // if(calqueFrigo.active===false){
-    //     if (currentTime - lastInteractionTime < openedFridgeCooldown) {
-    //         return;
-    //     }  
-    //     lastInteractionTime = currentTime;
-    //     calqueFrigo.changeStatus();
-    //     if(!marmiteDone){
-    //         confirmationKey='';
-    //         confirmations.deleteMarmite=false;
-    //     }
-    // }
     
     for(let i=0;i<interactions.length;i++){
         const interaction = interactions[i]
@@ -1431,8 +1355,6 @@ async function animate(){
             showQMark();
         }
     }
-    //console.log(fps);
-    //updateCurrentTime();
     updateAudio();
 }
   
@@ -1494,4 +1416,3 @@ window.addEventListener('keyup', (e)=>{
             break;
     }
 })
-
