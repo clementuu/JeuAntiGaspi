@@ -55,4 +55,26 @@ const GAME_CONFIG = {
     interactionCooldown: 250,
     openedFridgeCooldown: 3000,
     mapWidth: 22, // In tiles
+    playerSpeed: 2.7,
+    collisionSymbol: 1062,
+    interactionTypes: {
+        DOOR_EXIT: 357, // Porte de sortie
+        ROBINET_EVO: 2357, // Robinet
+        CARTON: 23, // Carton
+        JUKEBOX: 57, // Jukebox
+        PLAQUES: 5, // Plaques
+        POUBELLES: 6, // Poubelles
+        FRIGO: 7, // Frigo
+        MARMITE: 8, // Marmite
+        PAPIER: 9, // Papier
+        ASSIETTE: 10, // Assiette
+        LAMPE_BAS: 11, // LampeBas
+        LAMPE_DECO: 12, // Lampe 2
+        LAVABO: 13, // Lavabo
+        LETTRE: 14, // Papier2
+        LAMPE_CUISINE: 15, // Lampe Cuisine
+        CHEMINEE: 16, // Chemine
+        BAIGNOIRE: 17, // Baignoire
+        BOUTEILLE: 19 // Bouteille
+    }
 };

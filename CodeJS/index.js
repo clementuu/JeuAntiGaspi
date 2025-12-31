@@ -8,236 +8,219 @@ document.addEventListener("keydown", () => {
     audioMuted = false;
 }, { once: true });
 
+const canvas=document.querySelector("canvas");
+const c=canvas.getContext('2d');
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const canvas=document.querySelector("canvas");
-const c=canvas.getContext('2d');
-
-//Lecture des tableaux json
-const collisionsMap=[]
-for (let i=0; i<collisions.length; i+=GAME_CONFIG.mapWidth){
-    collisionsMap.push(collisions.slice(i, i+22));
-}
-
-var interactionMap=[]
-for (let i=0; i<interactionData.length; i+=GAME_CONFIG.mapWidth){
-    interactionMap.push(interactionData.slice(i, i+22));
-}
-
-//Audio
-const audioTheme = new Audio(AUDIO_PATHS.theme);
-audioTheme.volume=0.2;
-
-const audioJukebox = new Audio(AUDIO_PATHS.jukebox);
-audioJukebox.volume=0.35;
-
-const audioCollect = new Audio(AUDIO_PATHS.collect);
-audioCollect.volume=0.15;
-
-const audioFootsteps = new Audio(AUDIO_PATHS.footsteps);
-audioFootsteps.volume=0.35;
-
-const audioGasOn = new Audio(AUDIO_PATHS.gasOn);
-audioGasOn.volume=0.6;
-
-const audioGasOff = new Audio(AUDIO_PATHS.gasOff);
-audioGasOff.volume=0.6;
-
-const audioRobinetOn = new Audio(AUDIO_PATHS.robinetOn);
-audioRobinetOn.volume=0.45;
-
-const audioRobinetOff = new Audio(AUDIO_PATHS.robinetOff);
-audioRobinetOff.volume=0.45;
-
-const audioSwitch = new Audio(AUDIO_PATHS.switch);
-audioSwitch.volume=0.45;
-
-const audioFire = new Audio(AUDIO_PATHS.fire);
-audioFire.volume=0.3;
-
-const bathSound = new Audio(AUDIO_PATHS.bathtub);
-bathSound.volume=0.3;
-
-const vinylStart = new Audio(AUDIO_PATHS.vinylStart);
-vinylStart.volume=0.5;
-
-const vinylStop = new Audio(AUDIO_PATHS.vinylStop);
-vinylStop.volume=0.5;
-
 //Décalage de la fenêtre
 const offset = GAME_CONFIG.mapOffset;
 
-//Blocs de collision
-const boundaries=[];
-
-collisionsMap.forEach((row, i) => {
-    row.forEach((symbol, j)=> {
-        if (symbol===1062){
-            boundaries.push(
-                new Boundary({
-                    position: {
-                        x: j * Boundary.width - (offset.x+40),
-                        y: i * Boundary.height - (offset.y+210)
-                    }
-                }
-            ))
-        }
-    })
-})
-
-//Zones d'interactions
-var interactions=[];
-
 // Define interaction mappings with types and offsets
 const interactionMappings = {
-    357: { type: 1, xOff: 40, yOff: 235 }, // Porte de sortie
-    2357: { type: 4, xOff: 40, yOff: 235 }, // Robinet
-    23: { type: 2, xOff: 50, yOff: 245 }, // Carton
-    57: { type: 3, xOff: 40, yOff: 235 }, // Jukebox
-    5: { type: 5, xOff: 40, yOff: 235 }, // Plaques
-    6: { type: 6, xOff: 40, yOff: 235 }, // Poubelles
-    7: { type: 7, xOff: 40, yOff: 235 }, // Frigo
-    8: { type: 8, xOff: 40, yOff: 235 }, // Marmite
-    9: { type: 9, xOff: 30, yOff: 190 }, // Papier
-    10: { type: 10, xOff: 25, yOff: 220 }, // Assiette
-    11: { type: 11, xOff: 50, yOff: 200 }, // LampeBas
-    12: { type: 12, xOff: 40, yOff: 220 }, // Lampe 2
-    13: { type: 13, xOff: 40, yOff: 235 }, // Lavabo
-    14: { type: 14, xOff: 40, yOff: 200 }, // Papier2
-    15: { type: 15, xOff: 40, yOff: 210 }, // Lampe Cuisine
-    16: { type: 16, xOff: 40, yOff: 235 }, // Chemine
-    17: { type: 17, xOff: 25, yOff: 225 }, // Baignoire
-    19: { type: 19, xOff: 36, yOff: 255 }, // Bouteille
+    [GAME_CONFIG.interactionTypes.DOOR_EXIT]: { type: GAME_CONFIG.interactionTypes.DOOR_EXIT, xOff: 40, yOff: 235 }, // Porte de sortie
+    [GAME_CONFIG.interactionTypes.ROBINET_EVO]: { type: GAME_CONFIG.interactionTypes.ROBINET_EVO, xOff: 40, yOff: 235 }, // Robinet
+    [GAME_CONFIG.interactionTypes.CARTON]: { type: GAME_CONFIG.interactionTypes.CARTON, xOff: 50, yOff: 245 }, // Carton
+    [GAME_CONFIG.interactionTypes.JUKEBOX]: { type: GAME_CONFIG.interactionTypes.JUKEBOX, xOff: 40, yOff: 235 }, // Jukebox
+    [GAME_CONFIG.interactionTypes.PLAQUES]: { type: GAME_CONFIG.interactionTypes.PLAQUES, xOff: 40, yOff: 235 }, // Plaques
+    [GAME_CONFIG.interactionTypes.POUBELLES]: { type: GAME_CONFIG.interactionTypes.POUBELLES, xOff: 40, yOff: 235 }, // Poubelles
+    [GAME_CONFIG.interactionTypes.FRIGO]: { type: GAME_CONFIG.interactionTypes.FRIGO, xOff: 40, yOff: 235 }, // Frigo
+    [GAME_CONFIG.interactionTypes.MARMITE]: { type: GAME_CONFIG.interactionTypes.MARMITE, xOff: 40, yOff: 235 }, // Marmite
+    [GAME_CONFIG.interactionTypes.PAPIER]: { type: GAME_CONFIG.interactionTypes.PAPIER, xOff: 30, yOff: 190 }, // Papier
+    [GAME_CONFIG.interactionTypes.ASSIETTE]: { type: GAME_CONFIG.interactionTypes.ASSIETTE, xOff: 25, yOff: 220 }, // Assiette
+    [GAME_CONFIG.interactionTypes.LAMPE_BAS]: { type: GAME_CONFIG.interactionTypes.LAMPE_BAS, xOff: 50, yOff: 200 }, // LampeBas
+    [GAME_CONFIG.interactionTypes.LAMPE_DECO]: { type: GAME_CONFIG.interactionTypes.LAMPE_DECO, xOff: 40, yOff: 220 }, // Lampe 2
+    [GAME_CONFIG.interactionTypes.LAVABO]: { type: GAME_CONFIG.interactionTypes.LAVABO, xOff: 40, yOff: 235 }, // Lavabo
+    [GAME_CONFIG.interactionTypes.LETTRE]: { type: GAME_CONFIG.interactionTypes.LETTRE, xOff: 40, yOff: 200 }, // Papier2
+    [GAME_CONFIG.interactionTypes.LAMPE_CUISINE]: { type: GAME_CONFIG.interactionTypes.LAMPE_CUISINE, xOff: 40, yOff: 210 }, // Lampe Cuisine
+    [GAME_CONFIG.interactionTypes.CHEMINEE]: { type: GAME_CONFIG.interactionTypes.CHEMINEE, xOff: 40, yOff: 235 }, // Chemine
+    [GAME_CONFIG.interactionTypes.BAIGNOIRE]: { type: GAME_CONFIG.interactionTypes.BAIGNOIRE, xOff: 25, yOff: 225 }, // Baignoire
+    [GAME_CONFIG.interactionTypes.BOUTEILLE]: { type: GAME_CONFIG.interactionTypes.BOUTEILLE, xOff: 36, yOff: 255 }, // Bouteille
 };
 
-interactionMap.forEach((row, i) => {
-    row.forEach((symbol, j) => {
+//Lecture des tableaux json
+function processMapData(mapData, objectWidth, objectHeight, offsetX, offsetY, createObjectFn) {
+    const objects = [];
+    mapData.forEach((row, i) => {
+        row.forEach((symbol, j) => {
+            if (symbol !== 0) { // Assuming 0 means no object/interaction
+                const obj = createObjectFn(symbol, j, i, objectWidth, objectHeight, offsetX, offsetY);
+                if (obj) {
+                    objects.push(obj);
+                }
+            }
+        });
+    });
+    return objects;
+}
+
+const collisionsMap = [];
+for (let i = 0; i < collisions.length; i += GAME_CONFIG.mapWidth) {
+    collisionsMap.push(collisions.slice(i, i + GAME_CONFIG.mapWidth));
+}
+
+const interactionMap = [];
+for (let i = 0; i < interactionData.length; i += GAME_CONFIG.mapWidth) {
+    interactionMap.push(interactionData.slice(i, i + GAME_CONFIG.mapWidth));
+}
+
+//Blocs de collision
+let boundaries = processMapData(
+    collisionsMap,
+    Boundary.width,
+    Boundary.height,
+    offset.x + 40,
+    offset.y + 210,
+    (symbol, j, i, width, height, offsetX, offsetY) => {
+        if (symbol === GAME_CONFIG.collisionSymbol) {
+            return new Boundary({
+                position: {
+                    x: j * width - offsetX,
+                    y: i * height - offsetY
+                }
+            });
+        }
+        return null;
+    }
+);
+
+//Zones d'interactions
+let interactions = processMapData(
+    interactionMap,
+    Interactive.width,
+    Interactive.height,
+    offset.x,
+    offset.y,
+    (symbol, j, i, width, height, offsetX, offsetY) => {
         const mapping = interactionMappings[symbol];
         if (mapping) {
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x + mapping.xOff),
-                        y: i * Interactive.height - (offset.y + mapping.yOff)
-                    },
-                    type: mapping.type
-                })
-            );
+            return new Interactive({
+                position: {
+                    x: j * width - (offsetX + mapping.xOff),
+                    y: i * height - (offsetY + mapping.yOff)
+                },
+                type: mapping.type
+            });
         }
-    })
-})
+        return null;
+    }
+);
+
+//Audio
+const audio = {
+    theme: new Audio(AUDIO_PATHS.theme),
+    jukebox: new Audio(AUDIO_PATHS.jukebox),
+    collect: new Audio(AUDIO_PATHS.collect),
+    footsteps: new Audio(AUDIO_PATHS.footsteps),
+    gasOn: new Audio(AUDIO_PATHS.gasOn),
+    gasOff: new Audio(AUDIO_PATHS.gasOff),
+    robinetOn: new Audio(AUDIO_PATHS.robinetOn),
+    robinetOff: new Audio(AUDIO_PATHS.robinetOff),
+    switch: new Audio(AUDIO_PATHS.switch),
+    fire: new Audio(AUDIO_PATHS.fire),
+    bathtub: new Audio(AUDIO_PATHS.bathtub),
+    vinylStart: new Audio(AUDIO_PATHS.vinylStart),
+    vinylStop: new Audio(AUDIO_PATHS.vinylStop),
+};
+
+audio.theme.volume = 0.2;
+audio.jukebox.volume = 0.35;
+audio.collect.volume = 0.15;
+audio.footsteps.volume = 0.35;
+audio.gasOn.volume = 0.6;
+audio.gasOff.volume = 0.6;
+audio.robinetOn.volume = 0.45;
+audio.robinetOff.volume = 0.45;
+audio.switch.volume = 0.45;
+audio.fire.volume = 0.3;
+audio.bathtub.volume = 0.3;
+audio.vinylStart.volume = 0.5;
+audio.vinylStop.volume = 0.5;
 
 //Images
-const image=new Image();
-image.src=IMAGE_PATHS.houseMap;
+const images = {
+    houseMap: new Image(),
+    playerDown: new Image(),
+    playerUp: new Image(),
+    playerLeft: new Image(),
+    playerRight: new Image(),
+    premierPlan: new Image(),
+    frigoOff: new Image(),
+    frigoOn: new Image(),
+    baignoireOn: new Image(),
+    baignoireOff: new Image(),
+    chemineOn: new Image(),
+    chemineOff: new Image(),
+    lampeCuisineOff: new Image(),
+    lampeCuisineOn: new Image(),
+    lampeTableOff: new Image(),
+    lampeTableOn: new Image(),
+    lampeSalonOff: new Image(),
+    lampeSalonOn: new Image(),
+    lavaboOff: new Image(),
+    lavaboOn: new Image(),
+    plaquesOff: new Image(),
+    plaquesOn: new Image(),
+    evierOff: new Image(),
+    evierOn: new Image(),
+    marmiteItem: new Image(),
+    cartonItem: new Image(),
+    papierItem: new Image(),
+    assietteItem: new Image(),
+    papier2Item: new Image(),
+    bouteilleItem: new Image(),
+};
 
-const playerDownImage=new Image();
-playerDownImage.src=IMAGE_PATHS.playerDown;
-
-const playerUpImage=new Image();
-playerUpImage.src=IMAGE_PATHS.playerUp;
-
-const playerLeftImage=new Image();
-playerLeftImage.src=IMAGE_PATHS.playerLeft;
-
-const playerRightImage=new Image();
-playerRightImage.src=IMAGE_PATHS.playerRight;
-
-const premierPlan=new Image();
-premierPlan.src=IMAGE_PATHS.premierPlan;
-
-const frigoOffimg=new Image();
-frigoOffimg.src=IMAGE_PATHS.frigoOff;
-
-const frigoOnimg=new Image();
-frigoOnimg.src=IMAGE_PATHS.frigoOn;
-
-const baignoireOnimg=new Image();
-baignoireOnimg.src=IMAGE_PATHS.baignoireOn;
-
-const baignoireOffimg=new Image();
-baignoireOffimg.src=IMAGE_PATHS.baignoireOff;
-
-const chemineOnimg=new Image();
-chemineOnimg.src=IMAGE_PATHS.chemineOn;
-
-const chemineOffimg=new Image();
-chemineOffimg.src=IMAGE_PATHS.chemineOff;
-
-const lampeCuisineOffimg=new Image();
-lampeCuisineOffimg.src=IMAGE_PATHS.lampeCuisineOff;
-
-const lampeCuisineOnimg=new Image();
-lampeCuisineOnimg.src=IMAGE_PATHS.lampeCuisineOn;
-
-const lampeTableOffimg=new Image();
-lampeTableOffimg.src=IMAGE_PATHS.lampeTableOff;
-
-const lampeTableOnimg=new Image();
-lampeTableOnimg.src=IMAGE_PATHS.lampeTableOn;
-
-const lampeSalonOffimg=new Image();
-lampeSalonOffimg.src=IMAGE_PATHS.lampeSalonOff;
-
-const lampeSalonOnimg=new Image();
-lampeSalonOnimg.src=IMAGE_PATHS.lampeSalonOn;
-
-const lavaboOffimg=new Image();
-lavaboOffimg.src=IMAGE_PATHS.lavaboOff;
-
-const lavaboOnimg=new Image();
-lavaboOnimg.src=IMAGE_PATHS.lavaboOn;
-
-const plaquesOffimg=new Image();
-plaquesOffimg.src=IMAGE_PATHS.plaquesOff;
-
-const plaquesOnimg=new Image();
-plaquesOnimg.src=IMAGE_PATHS.plaquesOn;
-
-const evierOffimg=new Image();
-evierOffimg.src=IMAGE_PATHS.evierOff;
-
-const evierOnimg=new Image();
-evierOnimg.src=IMAGE_PATHS.evierOn;
-
-const marmiteImg=new Image();
-marmiteImg.src=IMAGE_PATHS.marmiteItem;
-
-const cartonImg=new Image();
-cartonImg.src=IMAGE_PATHS.cartonItem;
-
-const papierImg=new Image();
-papierImg.src=IMAGE_PATHS.papierItem;
-
-const assietteImg=new Image();
-assietteImg.src=IMAGE_PATHS.assietteItem;
-
-const papierImg2=new Image();
-papierImg2.src=IMAGE_PATHS.papier2Item;
-
-const bouteilleImg=new Image();
-bouteilleImg.src=IMAGE_PATHS.bouteilleItem;
+images.houseMap.src = IMAGE_PATHS.houseMap;
+images.playerDown.src = IMAGE_PATHS.playerDown;
+images.playerUp.src = IMAGE_PATHS.playerUp;
+images.playerLeft.src = IMAGE_PATHS.playerLeft;
+images.playerRight.src = IMAGE_PATHS.playerRight;
+images.premierPlan.src = IMAGE_PATHS.premierPlan;
+images.frigoOff.src = IMAGE_PATHS.frigoOff;
+images.frigoOn.src = IMAGE_PATHS.frigoOn;
+images.baignoireOn.src = IMAGE_PATHS.baignoireOn;
+images.baignoireOff.src = IMAGE_PATHS.baignoireOff;
+images.chemineOn.src = IMAGE_PATHS.chemineOn;
+images.chemineOff.src = IMAGE_PATHS.chemineOff;
+images.lampeCuisineOff.src = IMAGE_PATHS.lampeCuisineOff;
+images.lampeCuisineOn.src = IMAGE_PATHS.lampeCuisineOn;
+images.lampeTableOff.src = IMAGE_PATHS.lampeTableOff;
+images.lampeTableOn.src = IMAGE_PATHS.lampeTableOn;
+images.lampeSalonOff.src = IMAGE_PATHS.lampeSalonOff;
+images.lampeSalonOn.src = IMAGE_PATHS.lampeSalonOn;
+images.lavaboOff.src = IMAGE_PATHS.lavaboOff;
+images.lavaboOn.src = IMAGE_PATHS.lavaboOn;
+images.plaquesOff.src = IMAGE_PATHS.plaquesOff;
+images.plaquesOn.src = IMAGE_PATHS.plaquesOn;
+images.evierOff.src = IMAGE_PATHS.evierOff;
+images.evierOn.src = IMAGE_PATHS.evierOn;
+images.marmiteItem.src = IMAGE_PATHS.marmiteItem;
+images.cartonItem.src = IMAGE_PATHS.cartonItem;
+images.papierItem.src = IMAGE_PATHS.papierItem;
+images.assietteItem.src = IMAGE_PATHS.assietteItem;
+images.papier2Item.src = IMAGE_PATHS.papier2Item;
+images.bouteilleItem.src = IMAGE_PATHS.bouteilleItem;
 
 //Objet Joueur
 const player = new Sprite({
     position: {
-        x: canvas.width/2-(154/4)/2, //Taille de la fenêtre/2 - (taille image joueur/4(car 4 frames))/2 pour être bien centré  
-        y: canvas.height/2-55/2 //Taille de la fenêtre/2 - taille image joueur/2
+        x: canvas.width/2-(154/4)/2,
+        y: canvas.height/2-55/2
     },
-    image: playerDownImage,
+    image: images.playerDown,
     frames: {
-        max: 4 
+        max: 4
     },
     sprites: {
-        up: playerUpImage,
-        right:playerRightImage,
-        down:playerDownImage,
-        left:playerLeftImage
+        up: images.playerUp,
+        right: images.playerRight,
+        down: images.playerDown,
+        left: images.playerLeft
     }
 })
-
 //Inventaire
 const playerInventory = new Inventory();
 
@@ -247,7 +230,7 @@ const background = new Sprite({
         x: offset.x,
         y: offset.y
     },
-    image: image
+    image: images.houseMap
 })
 
 //Objet Premier plan
@@ -256,52 +239,52 @@ const foreground = new Sprite({
         x: offset.x,
         y: offset.y
     },
-    image: premierPlan
+    image: images.premierPlan
 })
 
 const frigo=[
-    frigoOffimg,
-    frigoOnimg
+    images.frigoOff,
+    images.frigoOn
 ]
 
 const chemine=[
-    chemineOnimg,
-    chemineOffimg
+    images.chemineOn,
+    images.chemineOff
 ]
 
 const baignoire=[
-    baignoireOffimg,
-    baignoireOnimg
+    images.baignoireOff,
+    images.baignoireOn
 ]
 
 const lampeC=[
-    lampeCuisineOnimg,
-    lampeCuisineOffimg
+    images.lampeCuisineOn,
+    images.lampeCuisineOff
 ]
 
 const lampeT=[
-    lampeTableOnimg,
-    lampeTableOffimg
+    images.lampeTableOn,
+    images.lampeTableOff
 ]
 
 const lampeS=[
-    lampeSalonOnimg,
-    lampeSalonOffimg
+    images.lampeSalonOn,
+    images.lampeSalonOff
 ]
 
 const lavaboA=[
-    lavaboOnimg,
-    lavaboOffimg
+    images.lavaboOn,
+    images.lavaboOff
 ]
 
 const evierA=[
-    evierOnimg,
-    evierOffimg
+    images.evierOn,
+    images.evierOff
 ]
 
 const plaquesA=[
-    plaquesOnimg,
-    plaquesOffimg
+    images.plaquesOn,
+    images.plaquesOff
 ]
 
 //Calques objets dynamiques
@@ -411,15 +394,15 @@ const keys = {
     } //retour
 }
 
-const marmite = new Collectible({position: {x: 90, y: -26}, image: marmiteImg, name: "Marmite "});
-const carton = new Collectible({position: {x: 5, y: 240}, image: cartonImg, name: "Carton "});
-const papier = new Collectible({position: {x: 180,y: 270}, image: papierImg, name: "Papier "});
-const assiette = new Collectible({position: {x: 345, y: 190}, image: assietteImg, name: "Assiette "});
-const papier2 = new Collectible({position: {x: 425, y: 190}, image: papierImg2, name: "Lettre "});
-const bouteille = new Collectible({position: {x: 85, y: 296}, image:bouteilleImg, name: "Bouteille "});
+const marmite = new Collectible({position: {x: 90, y: -26}, image: images.marmiteItem, name: "Marmite "});
+const carton = new Collectible({position: {x: 5, y: 240}, image: images.cartonItem, name: "Carton "});
+const papier = new Collectible({position: {x: 180,y: 270}, image: images.papierItem, name: "Papier "});
+const assiette = new Collectible({position: {x: 345, y: 190}, image: images.assietteItem, name: "Assiette "});
+const papier2 = new Collectible({position: {x: 425, y: 190}, image: images.papier2Item, name: "Lettre "});
+const bouteille = new Collectible({position: {x: 85, y: 296}, image:images.bouteilleItem, name: "Bouteille "});
 
 //Création des objets ramassables
-var collectibles= [
+let collectibles= [
     marmite,
     carton,
     papier,
@@ -428,8 +411,8 @@ var collectibles= [
     bouteille
 ];
 
-var btnYes = document.getElementById("btn-yes");
-var btnNo = document.getElementById("btn-no");
+let btnYes = document.getElementById("btn-yes");
+let btnNo = document.getElementById("btn-no");
  
 const movables=[background, ...boundaries, foreground, ...interactions, ...collectibles, ...calques];
 
@@ -536,9 +519,9 @@ function deleteInteractionByType(type) {
 
 function updateAudio() {
     if (player.moving) {
-      audioFootsteps.play();
+      audio.footsteps.play();
     } else {
-      audioFootsteps.pause();
+      audio.footsteps.pause();
     }
 }
 
@@ -701,15 +684,15 @@ async function animate(){
         interaction.draw();
     })
     if(!jukebox && !audioMuted){
-        audioTheme.play();
+        audio.theme.play();
     }
     if(chemineOn && !audioMuted){
-        audioFire.play();
+        audio.fire.play();
     }
-    audioJukebox.addEventListener('ended', () => {
+    audio.jukebox.addEventListener('ended', () => {
         jukebox=false;
     });
-      
+
     if(firstFrame){
         setTextContent("Je devrais me dépêcher de finir les tâches que mamie m'a\ndonnées avant de sortir jouer avec mes copains...\nC'était quoi déjà ?? Ah oui ! Tout est noté sur un papier !");
         showTextWindow(25000);
@@ -731,7 +714,7 @@ async function animate(){
                         rectangle2: {
                             ...boundary, position:{
                                 x:boundary.position.x,
-                                y:boundary.position.y+2.7
+                                y:boundary.position.y+GAME_CONFIG.playerSpeed
                             }
                         }
                     })
@@ -742,7 +725,7 @@ async function animate(){
             }
             if(moving){
                 movables.forEach((movable)=>{
-                    movable.position.y += 2.7;
+                    movable.position.y += GAME_CONFIG.playerSpeed;
                 })
             }
         }
@@ -758,7 +741,7 @@ async function animate(){
                         rectangle1: player,
                         rectangle2: {
                             ...boundary, position:{
-                                x:boundary.position.x-2.7,
+                                x:boundary.position.x-GAME_CONFIG.playerSpeed,
                                 y:boundary.position.y
                             }
                         }
@@ -770,7 +753,7 @@ async function animate(){
             }
             if(moving){
                 movables.forEach((movable)=>{
-                    movable.position.x -= 2.7;
+                    movable.position.x -= GAME_CONFIG.playerSpeed;
                 })
             }
         }
@@ -787,7 +770,7 @@ async function animate(){
                         rectangle2: {
                             ...boundary, position:{
                                 x:boundary.position.x,
-                                y:boundary.position.y-2.7
+                                y:boundary.position.y-GAME_CONFIG.playerSpeed
                             }
                         }
                     })
@@ -798,7 +781,7 @@ async function animate(){
             }
             if(moving){
                 movables.forEach((movable)=>{
-                    movable.position.y -= 2.7;
+                    movable.position.y -= GAME_CONFIG.playerSpeed;
                 })
         }
         }
@@ -814,7 +797,7 @@ async function animate(){
                         rectangle1: player,
                         rectangle2: {
                             ...boundary, position:{
-                                x:boundary.position.x+2.7,
+                                x:boundary.position.x+GAME_CONFIG.playerSpeed,
                                 y:boundary.position.y
                             }
                         }
@@ -826,7 +809,7 @@ async function animate(){
             }
             if(moving){
                 movables.forEach((movable)=>{
-                    movable.position.x += 2.7;
+                    movable.position.x += GAME_CONFIG.playerSpeed;
                 })
             }
         }
@@ -847,7 +830,7 @@ async function animate(){
                     }
                 })
             ){
-                if(interaction.type===1){
+                if(interaction.type===GAME_CONFIG.interactionTypes.DOOR_EXIT){
                     if (currentTime - lastInteractionTime <= interactionCooldown) {
                         // Ignore les instructions si le joueur ne respect pas le délai défini entre chaque interactions
                         return;
@@ -868,7 +851,7 @@ async function animate(){
                     }
                     showTextWindow();
                 }
-                else if(interaction.type===3){
+                else if(interaction.type===GAME_CONFIG.interactionTypes.JUKEBOX){
                     if (currentTime - lastInteractionTime < interactionCooldown) {
                         return;
                     }  
@@ -877,19 +860,19 @@ async function animate(){
                     if(!jukebox){
                         setTextContent('\n \ud834\udd1e \u2669 \ud83c\udf9d \u266a \u266c \ud83c\udf9d \u2669 \ud83c\udf9d');
                         showTextWindow();
-                        audioTheme.pause();
-                        vinylStart.play();
-                        audioJukebox.play();
+                        audio.theme.pause();
+                        audio.vinylStart.play();
+                        audio.jukebox.play();
                         jukebox=true;
                     }
                     else if(jukebox){
-                        audioJukebox.pause();
-                        vinylStop.play();
-                        audioTheme.play();
+                        audio.jukebox.pause();
+                        audio.vinylStop.play();
+                        audio.theme.play();
                         jukebox=false;
                     }
                 }
-                else if(interaction.type===6){
+                else if(interaction.type===GAME_CONFIG.interactionTypes.POUBELLES){
                     if (currentTime - lastInteractionTime < interactionCooldown) {
                         return;
                     }  
@@ -917,7 +900,7 @@ async function animate(){
                         showTextWindow();
                     }
                 }
-                else if(interaction.type===16){
+                else if(interaction.type===GAME_CONFIG.interactionTypes.CHEMINEE){
                     if(chemineOn){
                         if (currentTime - lastInteractionTime <= 3000) {
                             return;
@@ -940,7 +923,7 @@ async function animate(){
                         showTextWindow();
                     }
                 }
-                else if(interaction.type===17){
+                else if(interaction.type===GAME_CONFIG.interactionTypes.BAIGNOIRE){
                     if(!toutPropre){
                         if (currentTime - lastInteractionTime <= interactionCooldown) {
                             return;
@@ -950,7 +933,7 @@ async function animate(){
                         setTextContent("\nUn petit bain ne me ferait pas de mal");
                         showTextWindow();
                         await sleep(2000);
-                        bathSound.play();
+                        audio.bathSound.play();
                         fadeScreen(".fade-out");
                         await sleep(300);
                         calqueBaignoire.changeStatus();
@@ -969,7 +952,7 @@ async function animate(){
                         showTextWindow();
                     }
                 }
-                else if(interaction.type===7){
+                else if(interaction.type===GAME_CONFIG.interactionTypes.FRIGO){
                     if (currentTime - lastInteractionTime < interactionCooldown) {
                         return;
                     }
@@ -996,7 +979,7 @@ async function animate(){
                         }, openedFridgeCooldown);
                     }
                 }
-                else if(interaction.type==2){
+                else if(interaction.type===GAME_CONFIG.interactionTypes.CARTON){
                     if (currentTime - lastInteractionTime <= interactionCooldown) {
                         return;
                     }  
@@ -1004,16 +987,16 @@ async function animate(){
                     playerInventory.addCollectible(carton.name,cartonImg);
                     carton.removeFromGame();
                     deleteInteractionByType(2);
-                    audioCollect.play();
+                    audio.collect.play();
                 }
-                else if(interaction.type===4){
+                else if(interaction.type===GAME_CONFIG.interactionTypes.ROBINET_EVO){
                     if(calqueEvier.active){
                         if (currentTime - lastInteractionTime <= 1850) {
                             return;
                         }  
                         lastInteractionTime = currentTime;
 
-                        audioRobinetOff.play();
+                        audio.robinetOff.play();
                         await sleep(1850);
                         calqueEvier.changeStatus();
                     }
@@ -1023,19 +1006,19 @@ async function animate(){
                         }  
                         lastInteractionTime = currentTime;
 
-                        audioRobinetOn.play();
+                        audio.robinetOn.play();
                         await sleep(350);
                         calqueEvier.changeStatus();         
                     }
                 }
-                else if(interaction.type===5){
+                else if(interaction.type===GAME_CONFIG.interactionTypes.PLAQUES){
                     if(calquePlaques.active){
                         if (currentTime - lastInteractionTime <= 2700) {
                             return;
                         }  
                         lastInteractionTime = currentTime;
 
-                        audioGasOff.play();
+                        audio.gasOff.play();
                         await sleep(2700);
                         calquePlaques.changeStatus();
                     }
@@ -1045,12 +1028,12 @@ async function animate(){
                         }  
                         lastInteractionTime = currentTime;
 
-                        audioGasOn.play();
+                        audio.gasOn.play();
                         await sleep(1300);
                         calquePlaques.changeStatus();          
                     }
                 }
-                else if(interaction.type===8){
+                else if(interaction.type===GAME_CONFIG.interactionTypes.MARMITE){
                     if (currentTime - lastInteractionTime <= interactionCooldown) {
                         return;
                     }  
@@ -1058,9 +1041,9 @@ async function animate(){
                     playerInventory.addCollectible(marmite.name,marmiteImg);
                     marmite.removeFromGame();
                     deleteInteractionByType(8);
-                    audioCollect.play();
+                    audio.collect.play();
                 }
-                else if(interaction.type===9){
+                else if(interaction.type===GAME_CONFIG.interactionTypes.PAPIER){
                     if (currentTime - lastInteractionTime <= interactionCooldown) {
                         return;
                     }  
@@ -1068,9 +1051,9 @@ async function animate(){
                     playerInventory.addCollectible(papier.name,papierImg);
                     papier.removeFromGame();
                     deleteInteractionByType(9);
-                    audioCollect.play();
+                    audio.collect.play();
                 }
-                else if(interaction.type===10){
+                else if(interaction.type===GAME_CONFIG.interactionTypes.ASSIETTE){
                     if (currentTime - lastInteractionTime <= interactionCooldown) {
                         return;
                     }  
@@ -1078,9 +1061,9 @@ async function animate(){
                     playerInventory.addCollectible(assiette.name,assietteImg);
                     assiette.removeFromGame();
                     deleteInteractionByType(10); 
-                    audioCollect.play();    
+                    audio.collect.play();    
                 }
-                else if(interaction.type===19){
+                else if(interaction.type===GAME_CONFIG.interactionTypes.BOUTEILLE){
                     if (currentTime - lastInteractionTime <= interactionCooldown) {
                         return;
                     }  
@@ -1088,40 +1071,40 @@ async function animate(){
                     playerInventory.addCollectible(bouteille.name,bouteilleImg);
                     bouteille.removeFromGame();
                     deleteInteractionByType(19); 
-                    audioCollect.play();    
+                    audio.collect.play();    
                 }
-                else if(interaction.type===11){
+                else if(interaction.type===GAME_CONFIG.interactionTypes.LAMPE_BAS){
                     if (currentTime - lastInteractionTime < interactionCooldown) {
                         return;
                     }  
                     lastInteractionTime = currentTime;
-                    audioSwitch.play();
+                    audio.switch.play();
                     calqueLampeSalon.changeStatus();
                 }
-                else if(interaction.type===12){
+                else if(interaction.type===GAME_CONFIG.interactionTypes.LAMPE_DECO){
                     if (currentTime - lastInteractionTime < interactionCooldown) {
                         return;
                     }  
                     lastInteractionTime = currentTime;
-                    audioSwitch.play();
+                    audio.switch.play();
                     calqueLampeTable.changeStatus();
                 }
-                else if(interaction.type===15){
+                else if(interaction.type===GAME_CONFIG.interactionTypes.LAMPE_CUISINE){
                     if (currentTime - lastInteractionTime < interactionCooldown) {
                         return;
                     }  
                     lastInteractionTime = currentTime;
-                    audioSwitch.play();
+                    audio.switch.play();
                     calqueLampeCuisine.changeStatus();
                 }
-                else if(interaction.type===13){
+                else if(interaction.type===GAME_CONFIG.interactionTypes.LAVABO){
                     if(calqueLavabo.active){
                         if (currentTime - lastInteractionTime <= 1850) {
                             return;
                         }  
                         lastInteractionTime = currentTime;
 
-                        audioRobinetOff.play();
+                        audio.robinetOff.play();
                         await sleep(1850);
                         calqueLavabo.changeStatus();
                     }
@@ -1131,12 +1114,12 @@ async function animate(){
                         }  
                         lastInteractionTime = currentTime;
 
-                        audioRobinetOn.play();
+                        audio.robinetOn.play();
                         await sleep(350);
                         calqueLavabo.changeStatus();       
                     }
                 }
-                else if(interaction.type===14){
+                else if(interaction.type===GAME_CONFIG.interactionTypes.LETTRE){
                     if (currentTime - lastInteractionTime <= interactionCooldown) {
                         return;
                     }  
@@ -1144,7 +1127,7 @@ async function animate(){
                     playerInventory.addCollectible(papier2.name,papierImg2);
                     papier2.removeFromGame();
                     deleteInteractionByType(14); 
-                    audioCollect.play();    
+                    audio.collect.play();    
                 }
             }        
         }
