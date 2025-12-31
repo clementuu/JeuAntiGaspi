@@ -43,5 +43,3 @@ function launchStartPage(){
 document.addEventListener('DOMContentLoaded', function() {
     launchStartPage();
 });
-
-// document.addEventListener('mousemove', handleMouseMove);
