@@ -6,7 +6,7 @@ function playMusic(){
 }
 
 function toStart(){
-    window.location.href = "start.html";
+    window.location.href = "index.html";
 }
 
 fadeScreen(".fade-in");

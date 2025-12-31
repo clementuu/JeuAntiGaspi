@@ -6,7 +6,7 @@ function playMusic(){
 }
 
 function toGame(){
-    window.location.href = "index.html";
+    window.location.href = "game.html";
 }
 
 document.addEventListener('DOMContentLoaded', function() {

@@ -8,35 +8,15 @@
 		<script src="Data/interaction.js" defer></script>
 		<script src="Data/collisions.js" defer></script>
 		<script src="CodeJS/classes.js" defer></script>
-        <script src="CodeJS/index.js" defer></script>
+        <script src="CodeJS/start.js" defer></script>
 	</head>
 	
 	<body>
-		<div class="fade-in"></div>
-        <div class="fade-out"></div>
-		<div class="quick-fade"></div>
-		<div id="background"></div>
-        <main id="canvascont">
-            <canvas id="game"></canvas>
-			<canvas id="bin"></canvas>
-			<div id="text-window">
-				<p id="text-content"></p>
-			</div>
-			<div id="commandListContainer" class="command-list">
-				<ul>
-					<li>A : Oui</li>
-					<li>Z : Non</li>
-				</ul>
-			</div>
-			<div id="binContainer" class="container">
-				<div id="bin1" class="box" onclick="handleBinClick('bin1',playerInventory)"></div>
-				<div id="bin2" class="box" onclick="handleBinClick('bin2',playerInventory)"></div>
-				<div id="bin3" class="box" onclick="handleBinClick('bin3',playerInventory)"></div>
-			</div>
-			<p id="inv">Inventaire :</p>
-			<div id="inventory"></div>
-			<div id="qmark"></div>
-			<div id="timer">Temps restant: <span id="timeDisplay"></span></div>
+        <div id="background"></div>
+        <main id="start-page">
+            <h1>Le jeu Anti-Gaspi</h1>
+			<canvas id="perso"></canvas>
+            <button type="button" id="btn-start" onclick="toControls()">Commencer</button>
         </main>
 	</body>
 </html>
