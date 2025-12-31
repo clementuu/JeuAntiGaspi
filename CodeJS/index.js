@@ -1,6 +1,16 @@
+let audioMuted = true;
+
+document.addEventListener("click", () => {
+    audioMuted = false;
+}, { once: true });
+
+document.addEventListener("keydown", () => {
+    audioMuted = false;
+}, { once: true });
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
+}
 
 const canvas=document.querySelector("canvas");
 const c=canvas.getContext('2d');
@@ -738,21 +748,6 @@ function deleteInteractionByType(type) {
     }
 }
 
-// function setupEventListeners() {
-//     handleClick = (event) => {
-//         if (event.target.id === "btn-yes") {
-//             return true;  // Clicked the "Yes" button
-//         } 
-//         else if (event.target.id === "btn-no") {
-//             hideTextWindow();
-//             hideChoice();
-//             return false; // Clicked any other button
-//         }
-//     };
-//     btnYes.addEventListener("click", handleClick);
-//     btnNo.addEventListener("click", handleClick);
-// } 
-
 function updateAudio() {
     if (player.moving) {
       audioFootsteps.play();
@@ -860,39 +855,6 @@ function timer(minutes, seconds) {
     }, 1000);
 }
 
-// document.addEventListener('DOMContentLoaded', () => {
-//     const background = document.getElementById('background');
-//     const initialOffsetX = 0; // Adjust this value if needed
-//     const initialOffsetY = 0; // Adjust this value if needed
-  
-//     // Set initial background position
-//     background.style.backgroundPosition = `${initialOffsetX}px ${initialOffsetY}px`;
-  
-//     // Register mousemove event listener
-//     document.addEventListener('mousemove', handleMouseMove);
-  
-//     function handleMouseMove(event) {
-//       const mouseX = event.clientX;
-//       const mouseY = event.clientY;
-  
-//       const offsetX = initialOffsetX + mouseX / window.innerWidth*2;
-//       const offsetY = initialOffsetY + mouseY / window.innerHeight*2;
-  
-//       background.style.backgroundPosition = `${offsetX*5}px ${offsetY*5}px`;
-//     }
-// });
-
-// function handleMouseMove(event) {
-//     const mouseX = event.clientX;
-//     const mouseY = event.clientY;
-  
-//     const background = document.getElementById('background');
-//     const offsetX = (mouseX - window.innerWidth / 2) / window.innerWidth * 10;
-//     const offsetY = (mouseY - window.innerHeight / 2) / window.innerHeight * 10;
-
-//     background.style.backgroundPosition = `${offsetX * 10}px ${offsetY * 10}px`;
-// }
-
 const confirmations = {
     deleteMarmite: false
 };
@@ -914,12 +876,6 @@ let lastInteractionTime = 0;
 const interactionCooldown = GAME_CONFIG.interactionCooldown;
 const openedFridgeCooldown = GAME_CONFIG.openedFridgeCooldown;
 
-// Initialisation pour le calcul du fps
-// let frameCount = 0;
-// let fps = 0;
-// let lastTime = performance.now();
-// let startTime;
-
 function startGame() {
     var timeoutReached = timer(20, 0); // Set timeout min,sec
     if (timeoutReached) {
@@ -934,19 +890,6 @@ function startGame() {
 //Affichage du jeu, déplacement, actions etc
 async function animate(){
     window.requestAnimationFrame(animate);
-
-    
-    // // Calcul du FPS
-
-    // frameCount++;
-    // const currentT = performance.now();
-    // const elapsed = currentT - lastTime;
-  
-    // if (elapsed >= 1000) {
-    //     fps = Math.round((frameCount * 1000) / elapsed);
-    //     frameCount = 0;
-    //     lastTime = currentT;
-    // }
 
     fadeScreen('.fade-in');
     const currentTime = Date.now();
@@ -971,10 +914,10 @@ async function animate(){
     interactions.forEach((interaction) => {
         interaction.draw();
     })
-    if(!jukebox){
+    if(!jukebox && !audioMuted){
         audioTheme.play();
     }
-    if(chemineOn){
+    if(chemineOn && !audioMuted){
         audioFire.play();
     }
     audioJukebox.addEventListener('ended', () => {
