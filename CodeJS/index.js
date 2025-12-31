@@ -90,223 +90,41 @@ collisionsMap.forEach((row, i) => {
 //Zones d'interactions
 var interactions=[];
 
+// Define interaction mappings with types and offsets
+const interactionMappings = {
+    357: { type: 1, xOff: 40, yOff: 235 }, // Porte de sortie
+    2357: { type: 4, xOff: 40, yOff: 235 }, // Robinet
+    23: { type: 2, xOff: 50, yOff: 245 }, // Carton
+    57: { type: 3, xOff: 40, yOff: 235 }, // Jukebox
+    5: { type: 5, xOff: 40, yOff: 235 }, // Plaques
+    6: { type: 6, xOff: 40, yOff: 235 }, // Poubelles
+    7: { type: 7, xOff: 40, yOff: 235 }, // Frigo
+    8: { type: 8, xOff: 40, yOff: 235 }, // Marmite
+    9: { type: 9, xOff: 30, yOff: 190 }, // Papier
+    10: { type: 10, xOff: 25, yOff: 220 }, // Assiette
+    11: { type: 11, xOff: 50, yOff: 200 }, // LampeBas
+    12: { type: 12, xOff: 40, yOff: 220 }, // Lampe 2
+    13: { type: 13, xOff: 40, yOff: 235 }, // Lavabo
+    14: { type: 14, xOff: 40, yOff: 200 }, // Papier2
+    15: { type: 15, xOff: 40, yOff: 210 }, // Lampe Cuisine
+    16: { type: 16, xOff: 40, yOff: 235 }, // Chemine
+    17: { type: 17, xOff: 25, yOff: 225 }, // Baignoire
+    19: { type: 19, xOff: 36, yOff: 255 }, // Bouteille
+};
+
 interactionMap.forEach((row, i) => {
-    row.forEach((symbol, j)=> {
-        //Porte de sortie
-        if (symbol===357){
+    row.forEach((symbol, j) => {
+        const mapping = interactionMappings[symbol];
+        if (mapping) {
             interactions.push(
                 new Interactive({
                     position: {
-                        x: j * Interactive.width - (offset.x+40),
-                        y: i * Interactive.height - (offset.y+235)
+                        x: j * Interactive.width - (offset.x + mapping.xOff),
+                        y: i * Interactive.height - (offset.y + mapping.yOff)
                     },
-                    type: 1
-                }
-            ))
-        }
-        //Robinet
-        else if (symbol===2357){
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x+40),
-                        y: i * Interactive.height - (offset.y+235)
-                    },
-                    type: 4
-                }
-            ))
-        }
-        //Carton
-        else if (symbol===23){
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x+50),
-                        y: i * Interactive.height - (offset.y+245)
-                    },
-                    type: 2
-                }
-            ))
-        }
-        //Jukebox
-        else if (symbol===57){
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x+40),
-                        y: i * Interactive.height - (offset.y+235)
-                    },
-                    type: 3
-                }
-            ))
-        }
-        //Plaques
-        else if (symbol===5){
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x+40),
-                        y: i * Interactive.height - (offset.y+235)
-                    },
-                    type: 5
-                }
-            ))
-        }
-        //Poubelles
-        else if (symbol===6){
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x+40),
-                        y: i * Interactive.height - (offset.y+235)
-                    },
-                    type: 6
-                }
-            ))
-        }
-        //Frigo
-        else if (symbol===7){
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x+40),
-                        y: i * Interactive.height - (offset.y+235)
-                    },
-                    type: 7
-                }
-            ))
-        }
-        //Marmite
-        else if (symbol===8){
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x+40),
-                        y: i * Interactive.height - (offset.y+235)
-                    },
-                    type: 8
-                }
-            ))
-        }
-        //Papier
-        else if (symbol===9){
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x+30),
-                        y: i * Interactive.height - (offset.y+190)
-                    },
-                    type: 9
-                }
-            ))
-        }
-        //Assiette
-        else if (symbol===10){
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x+25),
-                        y: i * Interactive.height - (offset.y+220)
-                    },
-                    type: 10
-                }
-            ))
-        }
-        //LampeBas
-        else if (symbol===11){
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x+50),
-                        y: i * Interactive.height - (offset.y+200)
-                    },
-                    type: 11
-                }
-            ))
-        }
-        //Lampe 2
-        else if (symbol===12){
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x+40),
-                        y: i * Interactive.height - (offset.y+220)
-                    },
-                    type: 12
-                }
-            ))
-        }
-        //Lavabo
-        else if (symbol===13){
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x+40),
-                        y: i * Interactive.height - (offset.y+235)
-                    },
-                    type: 13
-                }
-            ))
-        }
-        //Papier2
-        else if (symbol===14){
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x+40),
-                        y: i * Interactive.height - (offset.y+200)
-                    },
-                    type: 14
-                }
-            ))
-        }
-        //Lampe Cuisine
-        else if (symbol===15){
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x+40),
-                        y: i * Interactive.height - (offset.y+210)
-                    },
-                    type: 15
-                }
-            ))
-        }
-        //Chemine
-        else if (symbol===16){
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x+40),
-                        y: i * Interactive.height - (offset.y+235)
-                    },
-                    type: 16
-                }
-            ))
-        }
-        //Baignoire
-        else if (symbol===17){
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x+25),
-                        y: i * Interactive.height - (offset.y+225)
-                    },
-                    type: 17
-                }
-            ))
-        }
-        //Bouteille
-        else if (symbol===19){
-            interactions.push(
-                new Interactive({
-                    position: {
-                        x: j * Interactive.width - (offset.x+36),
-                        y: i * Interactive.height - (offset.y+255)
-                    },
-                    type: 19
-                }
-            ))
+                    type: mapping.type
+                })
+            );
         }
     })
 })
