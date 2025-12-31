@@ -7,60 +7,57 @@ const c=canvas.getContext('2d');
 
 //Lecture des tableaux json
 const collisionsMap=[]
-for (let i=0; i<collisions.length; i+=22){
+for (let i=0; i<collisions.length; i+=GAME_CONFIG.mapWidth){
     collisionsMap.push(collisions.slice(i, i+22));
 }
 
 var interactionMap=[]
-for (let i=0; i<interactionData.length; i+=22){
+for (let i=0; i<interactionData.length; i+=GAME_CONFIG.mapWidth){
     interactionMap.push(interactionData.slice(i, i+22));
 }
 
 //Audio
-const audioTheme = new Audio("../Audio/15 - National Park.mp3");
+const audioTheme = new Audio(AUDIO_PATHS.theme);
 audioTheme.volume=0.2;
 
-const audioJukebox = new Audio("../Audio/01 - The Pink Panther Theme.flac");
+const audioJukebox = new Audio(AUDIO_PATHS.jukebox);
 audioJukebox.volume=0.35;
 
-const audioCollect = new Audio("../Audio/mixkit-martial-arts-punch-2052.wav");
+const audioCollect = new Audio(AUDIO_PATHS.collect);
 audioCollect.volume=0.15;
 
-const audioFootsteps = new Audio("../Audio/FootSteps.wav");
+const audioFootsteps = new Audio(AUDIO_PATHS.footsteps);
 audioFootsteps.volume=0.35;
 
-const audioGasOn = new Audio("../Audio/GasOn.wav");
+const audioGasOn = new Audio(AUDIO_PATHS.gasOn);
 audioGasOn.volume=0.6;
 
-const audioGasOff = new Audio("../Audio/GasOff.wav");
+const audioGasOff = new Audio(AUDIO_PATHS.gasOff);
 audioGasOff.volume=0.6;
 
-const audioRobinetOn = new Audio("../Audio/RobinetOn.wav");
+const audioRobinetOn = new Audio(AUDIO_PATHS.robinetOn);
 audioRobinetOn.volume=0.45;
 
-const audioRobinetOff = new Audio("../Audio/RobinetOff.wav");
+const audioRobinetOff = new Audio(AUDIO_PATHS.robinetOff);
 audioRobinetOff.volume=0.45;
 
-const audioSwitch = new Audio("../Audio/mixkit-light-switch-sound-2579.wav");
+const audioSwitch = new Audio(AUDIO_PATHS.switch);
 audioSwitch.volume=0.45;
 
-const audioFire = new Audio("../Audio/campfireCrackles.wav");
+const audioFire = new Audio(AUDIO_PATHS.fire);
 audioFire.volume=0.3;
 
-const bathSound = new Audio("../Audio/bathtub.wav");
+const bathSound = new Audio(AUDIO_PATHS.bathtub);
 bathSound.volume=0.3;
 
-const vinylStart = new Audio("../Audio/VinylStart.wav");
+const vinylStart = new Audio(AUDIO_PATHS.vinylStart);
 vinylStart.volume=0.5;
 
-const vinylStop = new Audio("../Audio/VinylStop.wav");
+const vinylStop = new Audio(AUDIO_PATHS.vinylStop);
 vinylStop.volume=0.5;
 
 //Décalage de la fenêtre
-const offset={
-    x: -20,
-    y: -100
-}
+const offset = GAME_CONFIG.mapOffset;
 
 //Blocs de collision
 const boundaries=[];
@@ -318,94 +315,94 @@ interactionMap.forEach((row, i) => {
 
 //Images
 const image=new Image();
-image.src='../Images/HouseMap.png';
+image.src=IMAGE_PATHS.houseMap;
 
 const playerDownImage=new Image();
-playerDownImage.src='../Images/playerDown80.png';
+playerDownImage.src=IMAGE_PATHS.playerDown;
 
 const playerUpImage=new Image();
-playerUpImage.src='../Images/playerUp80.png';
+playerUpImage.src=IMAGE_PATHS.playerUp;
 
 const playerLeftImage=new Image();
-playerLeftImage.src='../Images/playerLeft80.png';
+playerLeftImage.src=IMAGE_PATHS.playerLeft;
 
 const playerRightImage=new Image();
-playerRightImage.src='../Images/playerRight80.png';
+playerRightImage.src=IMAGE_PATHS.playerRight;
 
 const premierPlan=new Image();
-premierPlan.src='../Images/PremierPlan.png';
+premierPlan.src=IMAGE_PATHS.premierPlan;
 
 const frigoOffimg=new Image();
-frigoOffimg.src='../Images/FrigoOff.png';
+frigoOffimg.src=IMAGE_PATHS.frigoOff;
 
 const frigoOnimg=new Image();
-frigoOnimg.src='../Images/FrigoOn.png';
+frigoOnimg.src=IMAGE_PATHS.frigoOn;
 
 const baignoireOnimg=new Image();
-baignoireOnimg.src="../Images/BaignoireOn.png";
+baignoireOnimg.src=IMAGE_PATHS.baignoireOn;
 
 const baignoireOffimg=new Image();
-baignoireOffimg.src="../Images/BaignoireOff.png";
+baignoireOffimg.src=IMAGE_PATHS.baignoireOff;
 
 const chemineOnimg=new Image();
-chemineOnimg.src="../Images/ChemineOn.png";
+chemineOnimg.src=IMAGE_PATHS.chemineOn;
 
 const chemineOffimg=new Image();
-chemineOffimg.src="../Images/ChemineOff.png";
+chemineOffimg.src=IMAGE_PATHS.chemineOff;
 
 const lampeCuisineOffimg=new Image();
-lampeCuisineOffimg.src='../Images/LampeCuisineOff.png';
+lampeCuisineOffimg.src=IMAGE_PATHS.lampeCuisineOff;
 
 const lampeCuisineOnimg=new Image();
-lampeCuisineOnimg.src='../Images/LampeCuisineOn.png';
+lampeCuisineOnimg.src=IMAGE_PATHS.lampeCuisineOn;
 
 const lampeTableOffimg=new Image();
-lampeTableOffimg.src='../Images/LampeTableOff.png';
+lampeTableOffimg.src=IMAGE_PATHS.lampeTableOff;
 
 const lampeTableOnimg=new Image();
-lampeTableOnimg.src='../Images/LampeTableOn.png';
+lampeTableOnimg.src=IMAGE_PATHS.lampeTableOn;
 
 const lampeSalonOffimg=new Image();
-lampeSalonOffimg.src='../Images/LampeSalonOff.png';
+lampeSalonOffimg.src=IMAGE_PATHS.lampeSalonOff;
 
 const lampeSalonOnimg=new Image();
-lampeSalonOnimg.src='../Images/LampeSalonOn.png';
+lampeSalonOnimg.src=IMAGE_PATHS.lampeSalonOn;
 
 const lavaboOffimg=new Image();
-lavaboOffimg.src='../Images/lavaboOff.png';
+lavaboOffimg.src=IMAGE_PATHS.lavaboOff;
 
 const lavaboOnimg=new Image();
-lavaboOnimg.src='../Images/lavaboOn.png';
+lavaboOnimg.src=IMAGE_PATHS.lavaboOn;
 
 const plaquesOffimg=new Image();
-plaquesOffimg.src='../Images/plaquesOff.png';
+plaquesOffimg.src=IMAGE_PATHS.plaquesOff;
 
 const plaquesOnimg=new Image();
-plaquesOnimg.src='../Images/plaquesOn.png';
+plaquesOnimg.src=IMAGE_PATHS.plaquesOn;
 
 const evierOffimg=new Image();
-evierOffimg.src='../Images/evierOff.png';
+evierOffimg.src=IMAGE_PATHS.evierOff;
 
 const evierOnimg=new Image();
-evierOnimg.src='../Images/evierOn.png';
+evierOnimg.src=IMAGE_PATHS.evierOn;
 
 const marmiteImg=new Image();
-marmiteImg.src='../Images/Items/Marmite.png';
+marmiteImg.src=IMAGE_PATHS.marmiteItem;
 
 const cartonImg=new Image();
-cartonImg.src='../Images/Items/Carton.png';
+cartonImg.src=IMAGE_PATHS.cartonItem;
 
 const papierImg=new Image();
-papierImg.src='../Images/Items/Papier.png';
+papierImg.src=IMAGE_PATHS.papierItem;
 
 const assietteImg=new Image();
-assietteImg.src='../Images/Items/Assiette.png';
+assietteImg.src=IMAGE_PATHS.assietteItem;
 
 const papierImg2=new Image();
-papierImg2.src='../Images/Items/Papier2.png';
+papierImg2.src=IMAGE_PATHS.papier2Item;
 
 const bouteilleImg=new Image();
-bouteilleImg.src='../Images/Items/Bouteille.png';
+bouteilleImg.src=IMAGE_PATHS.bouteilleItem;
 
 //Objet Joueur
 const player = new Sprite({
@@ -914,8 +911,8 @@ let confirmingDeleteMarmite=false;
 let binShown=false;
 let allowPlayerMovement = true;
 let lastInteractionTime = 0;
-const interactionCooldown = 250;
-const openedFridgeCooldown = 3000;
+const interactionCooldown = GAME_CONFIG.interactionCooldown;
+const openedFridgeCooldown = GAME_CONFIG.openedFridgeCooldown;
 
 // Initialisation pour le calcul du fps
 // let frameCount = 0;
