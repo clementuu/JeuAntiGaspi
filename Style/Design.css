@@ -152,7 +152,6 @@ h1 {
   font-size: 52px;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-weight: bolder;
-  text-decoration: underline;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   animation: simpleApparition 2s ease-out;
 }

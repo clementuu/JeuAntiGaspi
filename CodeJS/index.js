@@ -984,7 +984,7 @@ async function animate(){
                         return;
                     }  
                     lastInteractionTime = currentTime;
-                    playerInventory.addCollectible(carton.name,cartonImg);
+                    playerInventory.addCollectible(carton.name,carton.image);
                     carton.removeFromGame();
                     deleteInteractionByType(2);
                     audio.collect.play();
@@ -1038,7 +1038,7 @@ async function animate(){
                         return;
                     }  
                     lastInteractionTime = currentTime;
-                    playerInventory.addCollectible(marmite.name,marmiteImg);
+                    playerInventory.addCollectible(marmite.name,marmite.image);
                     marmite.removeFromGame();
                     deleteInteractionByType(8);
                     audio.collect.play();
@@ -1048,7 +1048,7 @@ async function animate(){
                         return;
                     }  
                     lastInteractionTime = currentTime;
-                    playerInventory.addCollectible(papier.name,papierImg);
+                    playerInventory.addCollectible(papier.name,papier.image);
                     papier.removeFromGame();
                     deleteInteractionByType(9);
                     audio.collect.play();
@@ -1058,7 +1058,7 @@ async function animate(){
                         return;
                     }  
                     lastInteractionTime = currentTime;
-                    playerInventory.addCollectible(assiette.name,assietteImg);
+                    playerInventory.addCollectible(assiette.name,assiette.image);
                     assiette.removeFromGame();
                     deleteInteractionByType(10); 
                     audio.collect.play();    
@@ -1068,7 +1068,7 @@ async function animate(){
                         return;
                     }  
                     lastInteractionTime = currentTime;
-                    playerInventory.addCollectible(bouteille.name,bouteilleImg);
+                    playerInventory.addCollectible(bouteille.name,bouteille.image);
                     bouteille.removeFromGame();
                     deleteInteractionByType(19); 
                     audio.collect.play();    
@@ -1124,7 +1124,7 @@ async function animate(){
                         return;
                     }  
                     lastInteractionTime = currentTime;
-                    playerInventory.addCollectible(papier2.name,papierImg2);
+                    playerInventory.addCollectible(papier2.name,papier2.image);
                     papier2.removeFromGame();
                     deleteInteractionByType(14); 
                     audio.collect.play();    
