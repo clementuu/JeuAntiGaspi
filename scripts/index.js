@@ -715,6 +715,7 @@ async function animate(){
 
     if (keys.z.pressed && lastKey==='z'){
         if(allowPlayerMovement){
+            if(binShown) hideBin();
             player.moving=true;
             player.image=player.sprites.up;
             for(let i=0;i<boundaries.length;i++){
@@ -743,6 +744,7 @@ async function animate(){
     }
     else if (keys.d.pressed && lastKey==='d'){
         if(allowPlayerMovement){
+            if(binShown) hideBin();
             player.moving=true;
             player.image=player.sprites.right;
             for(let i=0;i<boundaries.length;i++){
@@ -771,6 +773,7 @@ async function animate(){
     }
     else if (keys.s.pressed && lastKey==='s'){
         if(allowPlayerMovement){
+            if(binShown) hideBin();
             player.moving=true;
             player.image=player.sprites.down;
             for(let i=0;i<boundaries.length;i++){
@@ -799,6 +802,7 @@ async function animate(){
     }
     else if (keys.q.pressed && lastKey==='q'){
         if(allowPlayerMovement){
+            if(binShown) hideBin();
             player.moving=true;
             player.image=player.sprites.left;
             for(let i=0;i<boundaries.length;i++){
@@ -891,7 +895,6 @@ async function animate(){
                     const binAccessible = playerInventory.collectibles.find(collectible => collectible.name === "Papier " || collectible.name === "Assiette " || collectible.name === "Carton " || collectible.name === "Bouteille ");
                     if(binAccessible){
                         hide('commandListContainer');
-                        allowPlayerMovement=false;
                         setTextContent("Tiens j'ai des trucs à jeter !");
                         showTextWindow();
                         await sleep(1000);
