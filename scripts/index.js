@@ -497,15 +497,23 @@ function setTextContent(text) {
 function showBin() {
     var binWindow = document.getElementById("bin");
     var binContainer = document.getElementById("binContainer");
+    var backgroundCanvas = document.getElementById("background");
+    var gameCanvas = document.getElementById("game");
     binWindow.style.display = "block";
     binContainer.style.display = "flex";
+    gameCanvas.classList.add("sombre");
+    backgroundCanvas.classList.add("sombre");
 }
 
 function hideBin() {
     var binWindow = document.getElementById("bin");
     var binContainer = document.getElementById("binContainer");
+    var backgroundCanvas = document.getElementById("background");
+    var gameCanvas = document.getElementById("game");
     binWindow.style.display = "none";
     binContainer.style.display = "none";
+    gameCanvas.classList.remove("sombre");
+    backgroundCanvas.classList.remove("sombre");
     binShown=false;
     playerInventory.inBin=false;
     allowPlayerMovement=true;
