@@ -211,27 +211,27 @@ class Inventory {
         else{
             switch (itemName) {
                 case "Carton ":
-                    msg = "\nDans quelle poubelle devrais-je jeter ça ?";
+                    msg = "Dans quelle poubelle devrais-je jeter ça ?";
                     this.selected="Carton ";
                     break;
                 case "Papier ":
-                    msg = "\nDans quelle poubelle devrais-je jeter ça ?";
+                    msg = "Dans quelle poubelle devrais-je jeter ça ?";
                     this.selected="Papier ";
                     break;
                 case "Marmite ":
-                    msg = "\nJe ferais mieux de ne pas jeter ça...";
+                    msg = "Je ferais mieux de ne pas jeter ça...";
                     this.selected="Marmite ";
                     break;
                 case "Assiette ":
-                    msg = "\nDans quelle poubelle devrais-je jeter ça ?";
+                    msg = "Dans quelle poubelle devrais-je jeter ça ?";
                     this.selected="Assiette ";
                     break;
                 case "Lettre ":
-                    msg = "\nJe ferais mieux de ne pas jeter ça...";
+                    msg = "Je ferais mieux de ne pas jeter ça...";
                     this.selected="Lettre ";
                     break;
                 case "Bouteille ":
-                    msg = "\nDans quelle poubelle devrais-je jeter ça ?";
+                    msg = "Dans quelle poubelle devrais-je jeter ça ?";
                     this.selected="Bouteille ";
                     break;
             }
