@@ -80,6 +80,17 @@ body {
   -20px -20px 10px rgb(66, 32, 0, 0.667);
 }
 
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 #text-window {
   background-color: var(--primary-color);
   position: absolute;
@@ -156,7 +167,11 @@ body {
 
 #end-page {
   text-align: center;
-  padding-top: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 h1 {
@@ -387,31 +402,48 @@ h2 {
   align-items: center;
 }
 
-/* --- Écrans de Fin --- */
+/* --- Écrans de Fin (Modernisés) --- */
 
-#end-page h1{
-  font-size: 72px;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  font-weight: bolder;
-  text-decoration: underline;
-  animation: none;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+#end-page h1 {
+  font-size: 80px;
+  color: var(--primary-color);
+  text-shadow: 0px 5px 15px rgba(231, 230, 167, 0.4);
+  text-decoration: none !important;
+  margin-bottom: 30px;
+  animation: simpleApparition 2s ease-out;
 }
 
-#end-page h3{
+#end-page h3 {
+  font-size: 36px;
+  color: white;
+  margin-bottom: 20px;
+  text-shadow: var(--text-shadow);
+}
+
+#end-page h4 {
   font-size: 42px;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  font-weight: bolder;
-  animation: none;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  background-color: var(--primary-color);
+  color: var(--dark-accent);
+  padding: 15px 40px;
+  border-radius: var(--border-radius);
+  display: inline-block;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+  border: 3px solid var(--dark-accent);
 }
 
-#end-page h4{
+#gameover h1 {
+  font-size: 90px;
+  color: #ff4d4d;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  text-shadow: 0px 0px 20px rgba(255, 77, 77, 0.5);
+  margin-bottom: 20px;
+}
+
+#gameover h2 {
   font-size: 32px;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  font-weight: bolder;
-  animation: none;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  color: white;
+  text-shadow: var(--text-shadow);
 }
 
 /* --- Utilitaires & Animations --- */
@@ -427,9 +459,20 @@ h2 {
 }
 
 .blinkw {
+  display: block;
   animation: blink-animation 1.5s infinite ease-in-out;
   color: white;
-  margin-top: 10%;
+  margin-top: 60px !important;
+  font-size: 26px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.blinkw:hover {
+  color: var(--primary-color);
+  transform: scale(1.1);
 }
 
 @keyframes blink-animation {
@@ -466,16 +509,12 @@ h2 {
   z-index: 9999; opacity: 1; pointer-events: none;
 }
 
-#qmark{
-  display: none;
-  position: absolute;
-  top: 38%;
-  left: 53%;
-  transform: translate(-38%, -53%);
-  width: 40px;
-  height: 40px;
-  background-image: url('../Images/qMark.png');
-  pointer-events: none;
-  background-size: cover;
-  background-repeat: no-repeat;
+.box {
+  display: block;
+  width: 110px;
+  height: 150px;
+  background-color: transparent;
+  border: none;
+  margin: 20px;
+  cursor: pointer;
 }

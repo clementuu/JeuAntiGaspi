@@ -52,6 +52,10 @@ const GAME_CONFIG = {
         x: -20,
         y: -100
     },
+    duration: {
+        min: 10,
+        sec: 0
+    },
     interactionCooldown: 250,
     openedFridgeCooldown: 3000,
     mapWidth: 22, // In tiles

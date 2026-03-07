@@ -534,44 +534,44 @@ function handleBinClick(divId,playerInventory) {
             if(playerInventory.selected=="Assiette "){
                 playerInventory.removeCollectible("Assiette ");
                 assietteDone=true;
-                setTextContent("\nLes restes alimentaires c'est dans la poubelle orange !");
+                setTextContent("Les restes alimentaires c'est dans la poubelle orange !");
             }
             else if(playerInventory.selected=="Marmite "||playerInventory.selected=="Lettre "){
-                setTextContent("\nJe ferais mieux de ne pas jeter ça...");
+                setTextContent("Je ferais mieux de ne pas jeter ça...");
             }
             else{
-                setTextContent("\nNon, pas là...");
+                setTextContent("Non, pas là...");
             }
             break;
         case 'bin2':
             if(playerInventory.selected=="Marmite "||playerInventory.selected=="Lettre "){
-                setTextContent("\nJe ferais mieux de ne pas jeter ça...");
+                setTextContent("Je ferais mieux de ne pas jeter ça...");
             }
             else{
-                setTextContent("\nNon, pas là...");
+                setTextContent("Non, pas là...");
             }
             break;
         case 'bin3':
             if(playerInventory.selected=="Carton "){
                 playerInventory.removeCollectible("Carton ");
                 cartonDone=true;
-                setTextContent("\nBien, le carton c'est dans la jaune !");
+                setTextContent("Bien, le carton c'est dans la jaune !");
             }
             else if(playerInventory.selected=="Papier "){
                 playerInventory.removeCollectible("Papier ");
                 papierDone=true;
-                setTextContent("\nBien, le papier c'est dans la jaune !");
+                setTextContent("Bien, le papier c'est dans la jaune !");
             }
             else if(playerInventory.selected=="Bouteille "){
                 playerInventory.removeCollectible("Bouteille ");
                 bouteilleDone=true;
-                setTextContent("\nBien, le plastique c'est dans la jaune !");
+                setTextContent("Bien, le plastique c'est dans la jaune !");
             }
             else if(playerInventory.selected=="Marmite "||playerInventory.selected=="Lettre "){
-                setTextContent("\nJe ferais mieux de ne pas jeter ça...");
+                setTextContent("Je ferais mieux de ne pas jeter ça...");
             }
             else{
-                setTextContent("\nNon, pas là...");
+                setTextContent("Non, pas là...");
             }
             break;
     }
@@ -649,7 +649,7 @@ const interactionCooldown = GAME_CONFIG.interactionCooldown;
 const openedFridgeCooldown = GAME_CONFIG.openedFridgeCooldown;
 
 function startGame() {
-    var timeoutReached = timer(20, 0); // Set timeout min,sec
+    var timeoutReached = timer(GAME_CONFIG.duration.min, GAME_CONFIG.duration.sec); // Set timeout min,sec
     if (timeoutReached) {
         fadeScreen('.fade-out');
         window.location.href = "gameover.html";
@@ -840,17 +840,17 @@ async function animate(){
                     }  
                     lastInteractionTime = currentTime;
                     if(!calquePlaques.active&&!calqueLampeSalon.active&&!calqueLampeTable.active&&!calqueEvier.active&&!calqueLavabo.active&&!calqueLampeCuisine.active&&marmiteDone&&cartonDone&&papierDone&&assietteDone&&bouteilleDone){
-                        setTextContent("\n\u00c7a y est je peux enfin sortir !");
+                        setTextContent("\u00c7a y est je peux enfin sortir !");
                         showTextWindow();
                         fadeScreen(".fade-out");
                         await sleep(5000);
                         window.location.href = "end.html";
                     }
                     else if(!calquePlaques.active||!calqueLampeSalon.active||!calqueLampeTable.active||!calqueEvier.active||!calqueLavabo.active||!calqueLampeCuisine.active||marmiteDone||cartonDone||papierDone||assietteDone||bouteilleDone){
-                        setTextContent("\n\u00c7a avance mais c'est pas encore ça !");
+                        setTextContent("\u00c7a avance mais c'est pas encore ça !");
                     }
                     else{
-                        setTextContent("\nHep hep hep, au boulot !");
+                        setTextContent("Hep hep hep, au boulot !");
                     }
                     showTextWindow();
                 }
@@ -861,7 +861,7 @@ async function animate(){
                     lastInteractionTime = currentTime;
 
                     if(!jukebox){
-                        setTextContent('\n \ud834\udd1e \u2669 \ud83c\udf9d \u266a \u266c \ud83c\udf9d \u2669 \ud83c\udf9d');
+                        setTextContent('\ud834\udd1e \u2669 \ud83c\udf9d \u266a \u266c \ud83c\udf9d \u2669 \ud83c\udf9d');
                         showTextWindow();
                         audio.theme.pause();
                         audio.vinylStart.play();
@@ -884,14 +884,14 @@ async function animate(){
                     if(binAccessible){
                         hide('commandListContainer');
                         allowPlayerMovement=false;
-                        setTextContent("\nTiens j'ai des trucs à jeter !");
+                        setTextContent("Tiens j'ai des trucs à jeter !");
                         showTextWindow();
                         await sleep(1000);
                         fadeScreen(".quick-fade");
                         binShown=true;
                         await sleep(1000);
                         showBin();
-                        setTextContent("\nPar quoi je commence ?");
+                        setTextContent("Par quoi je commence ?");
                         showTextWindow();
                         if(playerInventory.inBin===false){
                             playerInventory.binAccessed();
@@ -899,7 +899,7 @@ async function animate(){
                     }
                     else{
                         hide('commandListContainer');
-                        setTextContent("\nJe n'ai rien à jeter...");
+                        setTextContent("Je n'ai rien à jeter...");
                         showTextWindow();
                     }
                 }
@@ -910,19 +910,19 @@ async function animate(){
                         }  
                         lastInteractionTime = currentTime;
                         allowPlayerMovement=false;
-                        setTextContent("\nJe ferais mieux d'éteindre le feu avant de sortir");
+                        setTextContent("Je ferais mieux d'éteindre le feu avant de sortir");
                         showTextWindow();
                         await sleep(2000);
                         fadeScreen(".quick-fade");
                         await sleep(1000);
                         calqueChemine.changeStatus();
-                        setTextContent("\nC'est plus sûr comme ça");
+                        setTextContent("C'est plus sûr comme ça");
                         showTextWindow();
                         chemineOn=false;
                         allowPlayerMovement=true;
                     }
                     else{
-                        setTextContent("\nJe ne vais quand même pas rallumer la cheminée maintenant");
+                        setTextContent("Je ne vais quand même pas rallumer la cheminée maintenant");
                         showTextWindow();
                     }
                 }
@@ -933,7 +933,7 @@ async function animate(){
                         }  
                         lastInteractionTime = currentTime;
                         allowPlayerMovement=false;
-                        setTextContent("\nUn petit bain ne me ferait pas de mal");
+                        setTextContent("Un petit bain ne me ferait pas de mal");
                         showTextWindow();
                         await sleep(2000);
                         audio.bathSound.play();
@@ -951,7 +951,7 @@ async function animate(){
                         allowPlayerMovement=true;
                     }
                     else{
-                        setTextContent("\nJe suis déjà propre !");
+                        setTextContent("Je suis déjà propre !");
                         showTextWindow();
                     }
                 }
@@ -963,15 +963,15 @@ async function animate(){
 
                     const marmiteCollectible = playerInventory.collectibles.find(collectible => collectible.name === "Marmite ");
                     if(!marmiteCollectible&&!marmiteDone){
-                        setTextContent("\nUne liste de course et quelques magnets sont disposés sur la porte...");
+                        setTextContent("Une liste de course et quelques magnets sont disposés sur la porte...");
                         showTextWindow();
                     }
                     else if(marmiteDone){
-                        setTextContent("\nUne liste de course et quelques magnets sont disposés sur la porte...");
+                        setTextContent("Une liste de course et quelques magnets sont disposés sur la porte...");
                         showTextWindow();
                     }
                     else{
-                        setTextContent("\nJe mets les restes dans le frigo pour demain !");
+                        setTextContent("Je mets les restes dans le frigo pour demain !");
                         showTextWindow();
                         playerInventory.removeCollectible(marmiteCollectible.name);
                         calqueFrigo.changeStatus();
