@@ -16,7 +16,7 @@ function sleep(ms) {
 }
 
 // Phrase d'intro du jeu
-const introduction = "Je devrais me dépêcher de finir les tâches que mamie m'a\ndonnées avant de sortir jouer avec mes copains...\nC'était quoi déjà ?? Ah oui ! Tout est noté sur un papier !";
+const introduction = "Je devrais me dépêcher de finir les tâches que mamie m'a données avant de sortir jouer avec mes copains...\nC'était quoi déjà ?? Ah oui ! Tout est noté sur un papier !";
 
 //Décalage de la fenêtre
 const offset = GAME_CONFIG.mapOffset;

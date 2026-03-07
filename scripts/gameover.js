@@ -1,5 +1,5 @@
-const audioControls = new Audio("../Audio/29 - Ending Theme.mp3");
-audioControls.volume=0.2;
+const audioControls = new Audio("../audio/13 - Battle! Team Rocket Grunt.mp3");
+audioControls.volume=0.4;
 
 function playMusic(){
     audioControls.play();
@@ -14,5 +14,3 @@ fadeScreen(".fade-in");
 document.addEventListener('DOMContentLoaded', function() {
     playMusic();
 });
-
-// document.addEventListener('mousemove', handleMouseMove);

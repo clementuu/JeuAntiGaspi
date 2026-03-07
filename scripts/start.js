@@ -1,14 +1,14 @@
-const audioStart = new Audio("../Audio/26 - Lugia's Song.mp3");
+const audioStart = new Audio("../audio/26 - Lugia's Song.mp3");
 audioStart.volume=0.4;
 
-const audioClick = new Audio("../Audio/mixkit-explainer-video-game-alert-sweep-236.wav");
+const audioClick = new Audio("../audio/mixkit-explainer-video-game-alert-sweep-236.wav");
 audioClick.volume=0.3;
 
 const canvas=document.querySelector("canvas");
 const c=canvas.getContext('2d');
 
 const playerDownImage=new Image();
-playerDownImage.src='../Images/playerDown80.png';
+playerDownImage.src='../assets/playerDown80.png';
 
 const player = new Sprite({
     position: {
