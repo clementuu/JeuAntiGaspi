@@ -987,9 +987,9 @@ async function animate(){
                         return;
                     }  
                     lastInteractionTime = currentTime;
-                    playerInventory.addCollectible(carton.name,carton.image);
+                    playerInventory.addCollectible(carton);
                     carton.removeFromGame();
-                    deleteInteractionByType(2);
+                    deleteInteractionByType(GAME_CONFIG.interactionTypes.CARTON);
                     audio.collect.play();
                 }
                 else if(interaction.type===GAME_CONFIG.interactionTypes.ROBINET_EVO){
@@ -1041,9 +1041,9 @@ async function animate(){
                         return;
                     }  
                     lastInteractionTime = currentTime;
-                    playerInventory.addCollectible(marmite.name,marmite.image);
+                    playerInventory.addCollectible(marmite);
                     marmite.removeFromGame();
-                    deleteInteractionByType(8);
+                    deleteInteractionByType(GAME_CONFIG.interactionTypes.MARMITE);
                     audio.collect.play();
                 }
                 else if(interaction.type===GAME_CONFIG.interactionTypes.PAPIER){
@@ -1051,9 +1051,9 @@ async function animate(){
                         return;
                     }  
                     lastInteractionTime = currentTime;
-                    playerInventory.addCollectible(papier.name,papier.image);
+                    playerInventory.addCollectible(papier);
                     papier.removeFromGame();
-                    deleteInteractionByType(9);
+                    deleteInteractionByType(GAME_CONFIG.interactionTypes.PAPIER);
                     audio.collect.play();
                 }
                 else if(interaction.type===GAME_CONFIG.interactionTypes.ASSIETTE){
@@ -1061,9 +1061,9 @@ async function animate(){
                         return;
                     }  
                     lastInteractionTime = currentTime;
-                    playerInventory.addCollectible(assiette.name,assiette.image);
+                    playerInventory.addCollectible(assiette);
                     assiette.removeFromGame();
-                    deleteInteractionByType(10); 
+                    deleteInteractionByType(GAME_CONFIG.interactionTypes.ASSIETTE); 
                     audio.collect.play();    
                 }
                 else if(interaction.type===GAME_CONFIG.interactionTypes.BOUTEILLE){
@@ -1071,9 +1071,9 @@ async function animate(){
                         return;
                     }  
                     lastInteractionTime = currentTime;
-                    playerInventory.addCollectible(bouteille.name,bouteille.image);
+                    playerInventory.addCollectible(bouteille);
                     bouteille.removeFromGame();
-                    deleteInteractionByType(19); 
+                    deleteInteractionByType(GAME_CONFIG.interactionTypes.BOUTEILLE); 
                     audio.collect.play();    
                 }
                 else if(interaction.type===GAME_CONFIG.interactionTypes.LAMPE_BAS){
@@ -1127,9 +1127,9 @@ async function animate(){
                         return;
                     }  
                     lastInteractionTime = currentTime;
-                    playerInventory.addCollectible(papier2.name,papier2.image);
+                    playerInventory.addCollectible(papier2);
                     papier2.removeFromGame();
-                    deleteInteractionByType(14); 
+                    deleteInteractionByType(GAME_CONFIG.interactionTypes.LETTRE); 
                     audio.collect.play();    
                 }
             }        

@@ -65,7 +65,7 @@ class Interactive{
     }
 
     draw(){
-        if(this.active=true){
+        if(this.active===true){
             c.fillStyle='rgba(0,255,0,0)';
             c.fillRect(this.position.x, this.position.y, this.width, this.height);
         }
@@ -163,7 +163,7 @@ class Inventory {
 
             if (item.image) {
                 const itemImage = document.createElement('img');
-                itemImage.src = item.image;
+                itemImage.src = item.image.src;
                 itemImage.style.marginBottom = '-10px';
                 listItem.appendChild(itemImage);
             }
@@ -180,7 +180,6 @@ class Inventory {
     }
 
     handleItemClick(itemName) {
-        //console.log('Clicked item:', itemName);
         let msg="";
 
         if(this.inBin===false){
@@ -240,12 +239,7 @@ class Inventory {
         }
     }
   
-    addCollectible(name,image) {
-        const collectible = {
-            name: name,
-            image: image.src
-          };
-
+    addCollectible(collectible) {
         this.collectibles.push(collectible);
         this.updateInventory();
         let message = "";
