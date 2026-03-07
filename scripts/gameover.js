@@ -1,4 +1,4 @@
-const audioControls = new Audio("../audio/13 - Battle! Team Rocket Grunt.mp3");
+const audioControls = new Audio("../assets/audio/13 - Battle! Team Rocket Grunt.mp3");
 audioControls.volume=0.4;
 
 function playMusic(){

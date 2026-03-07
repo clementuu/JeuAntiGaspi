@@ -1,4 +1,4 @@
-const audioControls = new Audio("../audio/17 - The Burned Tower.mp3");
+const audioControls = new Audio("../assets/audio/17 - The Burned Tower.mp3");
 audioControls.volume=0.4;
 
 function playMusic(){

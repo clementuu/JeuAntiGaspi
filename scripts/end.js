@@ -1,4 +1,4 @@
-const audioControls = new Audio("../audio/29 - Ending Theme.mp3");
+const audioControls = new Audio("../assets/audio/29 - Ending Theme.mp3");
 audioControls.volume=0.2;
 
 function playMusic(){

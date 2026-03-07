@@ -1,7 +1,7 @@
-const audioStart = new Audio("../audio/26 - Lugia's Song.mp3");
+const audioStart = new Audio("../assets/audio/26 - Lugia's Song.mp3");
 audioStart.volume=0.4;
 
-const audioClick = new Audio("../audio/mixkit-explainer-video-game-alert-sweep-236.wav");
+const audioClick = new Audio("../assets/audio/mixkit-explainer-video-game-alert-sweep-236.wav");
 audioClick.volume=0.3;
 
 const canvas=document.querySelector("canvas");
