@@ -15,6 +15,9 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// Phrase d'intro du jeu
+const introduction = "Je devrais me dépêcher de finir les tâches que mamie m'a\ndonnées avant de sortir jouer avec mes copains...\nC'était quoi déjà ?? Ah oui ! Tout est noté sur un papier !";
+
 //Décalage de la fenêtre
 const offset = GAME_CONFIG.mapOffset;
 
@@ -72,7 +75,7 @@ let boundaries = processMapData(
     Boundary.width,
     Boundary.height,
     offset.x + 40,
-    offset.y + 210,
+    offset.y + 212,
     (symbol, j, i, width, height, offsetX, offsetY) => {
         if (symbol === GAME_CONFIG.collisionSymbol) {
             return new Boundary({
@@ -694,7 +697,7 @@ async function animate(){
     });
 
     if(firstFrame){
-        setTextContent("Je devrais me dépêcher de finir les tâches que mamie m'a\ndonnées avant de sortir jouer avec mes copains...\nC'était quoi déjà ?? Ah oui ! Tout est noté sur un papier !");
+        setTextContent(introduction);
         showTextWindow(25000);
         firstFrame=false;
     }

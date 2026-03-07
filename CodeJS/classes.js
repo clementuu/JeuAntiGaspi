@@ -190,10 +190,10 @@ class Inventory {
                     msg = "Ohhh c'est le carton dans lequel est arrivé mon super lego Batman ! Mais bon il ne sert plus à grand chose maintenant...";
                     break;
                 case "Papier ":
-                    msg = "\nUne promotion sur les chocolats ! Ah mince, la date est dépassée...";
+                    msg = "Une promotion sur les chocolats ! Ah mince, la date est dépassée...";
                     break;
                 case "Marmite ":
-                    msg = "\nCe sont les restes du repas que mamie a cuisiné, qu'est-ce que j'en fais ?";
+                    msg = "Ce sont les restes du repas que mamie a cuisiné, qu'est-ce que j'en fais ?";
                     break;
                 case "Assiette ":
                     msg = "Beeuurk ces choux de Bruxelles était vraiment pas terrible, je ne les finirai pas, autant les jeter...";
@@ -202,7 +202,7 @@ class Inventory {
                     msg = "Coucou mon chéri, je suis parti chez le coiffeur. Avant de sortir tu penseras à ramasser et ranger ce qui traine, et surtout n'oublie pas de fermer les robinets et d'éteindre la lumière avant de sortir !";
                     break;
                 case "Bouteille ":
-                    msg = "\nSi mamie voit que j'ai laissé trainer ma bouteille vide...";
+                    msg = "Si mamie voit que j'ai laissé trainer ma bouteille vide...";
                     break;
             }    
             setTextContent(msg);
@@ -253,25 +253,25 @@ class Inventory {
         // Determine the message based on the item
         switch (collectible.name) {
             case "Carton ":
-                message = "\nVous avez trouvé un carton !";
+                message = "Vous avez trouvé un carton !";
                 break;
             case "Papier ":
-                message = "\nVous avez trouvé un papier !";
+                message = "Vous avez trouvé un papier !";
                 break;
             case "Marmite ":
-                message = "\nVous avez trouvé une marmite !";
+                message = "Vous avez trouvé une marmite !";
                 break;
             case "Assiette ":
-                message = "\nVous avez ramassé une assiette !";
+                message = "Vous avez ramassé une assiette !";
                 break;
             case "Lettre ":
-                message = "\nVous avez ramassé une lettre !";
+                message = "Vous avez ramassé une lettre !";
                 break;
             case "Bouteille ":
-                message = "\nVous avec trouvé une bouteille !";
+                message = "Vous avec trouvé une bouteille !";
                 break
             default:
-                message = "\nItem ajouté à l'inventaire !";
+                message = "Item ajouté à l'inventaire !";
                 break;
         }
 
